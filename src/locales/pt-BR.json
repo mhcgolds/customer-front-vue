@@ -1,3 +1,15 @@
 {
-    "home": "Home"
+    "header": {
+        "logout": "Sair",
+        "account": "Conta",
+        "settings": "Configurações"
+    },
+    "home": {
+        "menu": "HOME",
+        "view-title": "Dashboard"
+    },
+    "customers": {
+        "menu": "Clientes",
+        "view-title": "Clientes"
+    }
 }

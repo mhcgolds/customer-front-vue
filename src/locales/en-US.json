@@ -1,3 +1,15 @@
 {
-    "home": "Home"
+    "header": {
+        "logout": "Logout",
+        "account": "Account",
+        "settings": "Settings"
+    },
+    "home": {
+        "menu": "HOME",
+        "view-title": "Dashboard"
+    },
+    "customers": {
+        "menu": "Customers",
+        "view-title": "Customers"
+    }
 }

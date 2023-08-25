@@ -1,13 +1,13 @@
 <template>
-  <IndexHeader :title="t('home.view-title')" />
+    <IndexHeader :title="t('customers.view-title')" />
 </template>
-  
+
 <script>
-import { getI18n } from '../app/i18n';
-import IndexHeader from './Layout/IndexHeader.vue'
+import { getI18n } from '../../app/i18n';
+import IndexHeader from '../Layout/IndexHeader.vue'
 
 export default {
-    name: 'Dashboard',
+    name: 'CustomerIndex',
     props: {
         title: {
             type: String,
