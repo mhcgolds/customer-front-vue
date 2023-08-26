@@ -1,7 +1,7 @@
 <template>
     <FormMessage :message="message" :isError="isError" />
 
-    <form ref="form" v-on:submit.prevent="onSubmit($event)">
+    <form ref="form" v-on:submit.prevent="onSubmit($event)" :action="getActionUrl()">
         <div class="grid grid-cols-1 gap-6">
             <slot></slot>
             <FormButtonSubmit :label="this.t('form.submit-create')" v-show="!id" />
@@ -20,6 +20,15 @@ import FormMessage from '../Layout/FormMessage.vue'
 import { ref } from 'vue'
 
 const form = new Form();
+form.setApiUrl('api');
+
+form.bindOnBeforeSubmit(() => {
+    // Show loading
+});
+
+form.bindOnRequestComplete(() => {
+    // Hide loading
+});
 
 export default {
     name: 'FormBase',
@@ -35,6 +44,9 @@ export default {
         isError: {
             type: Boolean,
             default: false
+        },
+        entityName: {
+            type: String
         }
     },
     computed: {
@@ -51,6 +63,10 @@ export default {
     methods: {
         onSubmit(event) {
             form.onSubmit(event);
+        },
+        getActionUrl() {
+            // Set 'update' url for update and 'store' for create
+            return this.entityName + '/' + (this.id ? `update/${this.id}` : 'store');
         }
     }
 }

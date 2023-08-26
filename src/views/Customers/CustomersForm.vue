@@ -2,7 +2,7 @@
     <IndexHeader :title="t('customers.create-title')" v-show="!id"></IndexHeader>
     <IndexHeader :title="t('customers.update-title')" v-show="id"></IndexHeader>
 
-    <FormBase :id="id" :message="message" :isError="isError">
+    <FormBase :id="id" :message="message" :isError="isError" entityName="customer">
         <label class="block">
             <span class="text-gray-700">{{ t('customers.form.name') }}</span>
             <input type="text" name="name" maxlength="255" class="form-input mt-1 block w-96" required="required">
