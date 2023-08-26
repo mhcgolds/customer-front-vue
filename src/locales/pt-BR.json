@@ -8,8 +8,20 @@
         "menu": "HOME",
         "view-title": "Dashboard"
     },
+    "form": {
+        "submit-create": "Salvar",
+        "submit-update": "Atualizar",
+        "back": "Voltar"
+    },
     "customers": {
         "menu": "Clientes",
-        "view-title": "Clientes"
+        "view-title": "Clientes",
+        "create-label": "Criar Cliente",
+        "create-title": "Criando Cliente",
+        "update-title": "Editando Cliente",
+        "form": {
+            "name": "Nome",
+            "country": "País"
+        }
     }
 }
