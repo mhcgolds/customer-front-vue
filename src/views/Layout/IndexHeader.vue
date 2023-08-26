@@ -1,5 +1,5 @@
 <template>
-    <h1 class="text-3xl">{{ title }}</h1>
+    <h1 class="text-3xl inline-block">{{ title }}</h1>
 </template>
 
 <script lang="ts">
@@ -14,9 +14,6 @@ export default {
     computed: {
     },
     components: {
-    },
-    setup(props, ctx) {
-        console.log('setup header', props, ctx.attrs);
     }
 }
 </script>

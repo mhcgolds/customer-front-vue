@@ -8,8 +8,20 @@
         "menu": "HOME",
         "view-title": "Dashboard"
     },
+    "form": {
+        "submit-create": "Save",
+        "submit-update": "Update",
+        "back": "Back"
+    },
     "customers": {
         "menu": "Customers",
-        "view-title": "Customers"
+        "view-title": "Customers",
+        "create-label": "Create Customer",
+        "create-title": "Creating Customer",
+        "update-title": "Editing Customer",
+        "form": {
+            "name": "Name",
+            "country": "Country"
+        }
     }
 }
