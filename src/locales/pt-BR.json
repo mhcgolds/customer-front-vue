@@ -13,6 +13,12 @@
         "submit-update": "Atualizar",
         "back": "Voltar"
     },
+    "auth": {
+        "login": {
+            "email-input": "Endereço de E-mail",
+            "password-input": "Senha"
+        }
+    },
     "customers": {
         "menu": "Clientes",
         "view-title": "Clientes",

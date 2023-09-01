@@ -1,10 +1,13 @@
 <template>
-  <IndexHeader :title="t('home.view-title')" />
+  <Layout>
+    <IndexHeader :title="t('home.view-title')" />
+  </Layout>
 </template>
   
 <script>
 import { getI18n } from '../app/i18n';
-import IndexHeader from './Layout/IndexHeader.vue'
+import Layout from './Layout/Layout.vue';
+import IndexHeader from './Layout/IndexHeader.vue';
 
 export default {
     name: 'Dashboard',
@@ -16,7 +19,8 @@ export default {
     computed: {
     },
     components: {
-        IndexHeader
+        IndexHeader,
+        Layout
     },
     setup() {
         return getI18n();
