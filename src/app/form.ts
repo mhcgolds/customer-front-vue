@@ -6,13 +6,14 @@ interface DOMElement extends Element {
     value: any
 }
 
-import axios, { type AxiosStatic } from 'axios'
+import axios, { type AxiosStatic, type AxiosResponse } from 'axios'
 import { useAuthStore } from './store';
 import { computed, type Ref } from 'vue'
 
 export default class Form {
-    private id: number = 0;
-    private form?: HTMLElement;
+    private id: string = '0';
+    private form: HTMLElement;
+    private apiUrl: string;
     private axios: AxiosStatic;
 
     // Events
@@ -24,12 +25,16 @@ export default class Form {
     // Auth
     private authToken?: Ref<string>;
 
-    constructor() {
+    constructor(form: HTMLElement, apiUrl: string) {
         this.axios = axios;
+        this.form = form;
+        
+        // Axios defaults
+        this.axios.defaults.baseURL = apiUrl;
 
         // This method will be called here when token is being set at login
-        // For now it is being set on 'setApiUrl'
-        //this.getAuthToken();
+        this.getAuthToken();
+        this.setEntityId();
     }
 
     private getAuthToken(): void {
@@ -52,20 +57,16 @@ export default class Form {
         }
     }
 
-    public setEntityId(id: number): void {
-        this.id = id;
+    private getEntityName(): string | null {
+        return this.form.getAttribute('entityname');
     }
 
-    public setApiUrl(url: string): void {
-        this.axios.defaults.baseURL = url;
-
-        // Temporary get token
-        this.getAuthToken();
+    public setEntityId(): void {
+        this.id = this.form.id;
+        this.openGetRequest();
     }
 
     public onSubmit(event: any): void {
-        this.form = event.target;
-
         // If 'id' is set, it's an update so use PUT method, otherwise it's a create request, then use POST
         if (this.id) {
             this.openPutRequest();
@@ -76,7 +77,7 @@ export default class Form {
     }
 
     private getFormUrl(): string {
-        const action = this.form?.getAttribute('action');
+        const action = this.form.getAttribute('action');
 
         if (!action) {
             throw new Error('Form\'s action is not defined');
@@ -85,8 +86,12 @@ export default class Form {
         return action;
     }
 
+    private getFormElements(): NodeListOf<Element> {
+        return this.form.querySelectorAll('input[name]:not(disabled), select[name]:not(disabled)');
+    }
+
     private getFormData(): Dictionary<any> {
-        const formElements = this.form?.querySelectorAll('input[name]:not(disabled), select[name]:not(disabled)');
+        const formElements = this.getFormElements();
         let data:Dictionary<any> = {};
 
         formElements?.forEach(element => {
@@ -107,12 +112,24 @@ export default class Form {
         return data;
     }
 
+    private openGetRequest() {
+        const entityName = this.getEntityName();
+
+        this.openApiRequest('GET', `/${entityName}/show/${this.id}`)
+        .then(this.handleGetRequestSuccess.bind(this))
+        .catch(this.handleRequestError);
+    }
+
     private openPostRequest(): void {
-        this.openApiRequest('POST', this.getFormUrl(), this.getFormData());
+        this.openApiRequest('POST', this.getFormUrl(), this.getFormData())
+        .then(this.handleRequestSuccess)
+        .catch(this.handleRequestError);
     }
 
     private openPutRequest(): void {
-        this.openApiRequest('GET', this.getFormUrl(), this.getFormData());
+        this.openApiRequest('PUT', this.getFormUrl(), this.getFormData())
+        .then(this.handleRequestSuccess)
+        .catch(this.handleRequestError);
     }
 
     private showFormMessage(message: string, isError: boolean = false): void {
@@ -123,16 +140,14 @@ export default class Form {
 
     }
 
-    private openApiRequest(method: string, url: string, data: object): void {
+    private openApiRequest(method: string, url: string, data?: object): Promise<AxiosResponse> {
         console.log('open request', method, url, data);
 
-        this.axios({
+        return this.axios({
             url: url,
             data: data,
             method: method,
-        })
-        .then(this.handleRequestSuccess)
-        .catch(this.handleRequestError);
+        });
     }
 
     public bindOnBeforeSubmit(callback: Function): void {
@@ -157,6 +172,20 @@ export default class Form {
 
     private handleRequestError(error: any): void {
         console.log('request error', error);
+    }
+
+    private handleGetRequestSuccess(data: AxiosResponse): void {
+        console.log('entity data', data);
+        
+        const formElements = this.getFormElements();
+        formElements?.forEach(element => {
+            let type = element.getAttribute('type'),
+                name = element.getAttribute('name');
+
+            if (name && data.data[name]) {
+                element.setAttribute('value', data.data[name]);
+            }
+        });
     }
 }
 

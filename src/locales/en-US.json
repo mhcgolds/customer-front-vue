@@ -19,6 +19,9 @@
             "password-input": "Password"
         }
     },
+    "grid": {
+        "actions": "Actions"
+    },
     "customers": {
         "menu": "Customers",
         "view-title": "Customers",
@@ -26,6 +29,10 @@
         "create-title": "Creating Customer",
         "update-title": "Editing Customer",
         "form": {
+            "name": "Name",
+            "country": "Country"
+        },
+        "grid": {
             "name": "Name",
             "country": "Country"
         }

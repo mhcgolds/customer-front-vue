@@ -38,8 +38,8 @@ const router = createRouter({
       component: CustomersForm
     },
     {
-      path: '/customers/update/:id',
-      name: 'CustomerUpdate',
+      path: '/customers/edit/:id',
+      name: 'CustomerEdit',
       component: CustomersForm,
       props: true
     }

@@ -7,7 +7,7 @@
 <script>
 import { getI18n } from '../app/i18n';
 import Layout from './Layout/Layout.vue';
-import IndexHeader from './Layout/IndexHeader.vue';
+import IndexHeader from './../components/index/IndexHeader.vue';
 
 export default {
     name: 'Dashboard',

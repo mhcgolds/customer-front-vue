@@ -19,8 +19,8 @@
 <script>
 import { getI18n } from '../../app/i18n';
 import Layout from '../Layout/Layout.vue'
-import IndexHeader from '../Layout/IndexHeader.vue'
-import FormBase from '../Layout/FormBase.vue'
+import IndexHeader from '../../components/index/IndexHeader.vue'
+import FormBase from '../../components/form/FormBase.vue'
 import { computed, ref, inject } from 'vue'
 
 export default {

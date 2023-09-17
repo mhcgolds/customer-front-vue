@@ -5,7 +5,7 @@
 
 <script lang="ts">
 export default {
-    name: 'FormButtonSubmit',
+    name: 'FormMessage',
     props: {
         message: {
             type: String,

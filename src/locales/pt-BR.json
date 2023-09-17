@@ -19,6 +19,9 @@
             "password-input": "Senha"
         }
     },
+    "grid": {
+        "actions": "Ações"
+    },
     "customers": {
         "menu": "Clientes",
         "view-title": "Clientes",
@@ -26,6 +29,10 @@
         "create-title": "Criando Cliente",
         "update-title": "Editando Cliente",
         "form": {
+            "name": "Nome",
+            "country": "País"
+        },
+        "grid": {
             "name": "Nome",
             "country": "País"
         }

@@ -1,7 +1,7 @@
 <template>
     <FormMessage :message="message" :isError="isError" />
 
-    <form ref="form" v-on:submit.prevent="onSubmit($event)" :action="getActionUrl(id)">
+    <form ref="formElement" v-on:submit.prevent="onSubmit($event)" :action="getActionUrl(id)" :id="id" :entityName="entityName">
         <div class="grid grid-cols-1 gap-6">
             <slot></slot>
             <FormButtonSubmit :label="this.t('form.submit-create')" v-show="!id" />
@@ -14,9 +14,9 @@
 <script>
 import { getI18n } from '../../app/i18n';
 import Form from '../../app/form';
-import FormButtonSubmit from '../Layout/FormButtonSubmit.vue'
-import FormButtonBack from '../Layout/FormButtonBack.vue'
-import FormMessage from '../Layout/FormMessage.vue'
+import FormButtonSubmit from './FormButtonSubmit.vue'
+import FormButtonBack from './FormButtonBack.vue'
+import FormMessage from './FormMessage.vue'
 import { ref } from 'vue'
 
 let form;
@@ -47,10 +47,9 @@ export default {
         FormButtonBack,
         FormButtonSubmit
     },
-    setup(props) {
-        form = new Form();
+    mounted() {
         // TODO: Change url to env variable
-        form.setApiUrl('http://127.0.0.1:8081/api');
+        form = new Form(this.formElement, 'http://127.0.0.1:8081/api');
 
         form.bindOnBeforeSubmit(() => {
             // Show loading
@@ -67,9 +66,11 @@ export default {
         form.bindOnRequestError(() => {
             // Show error message
         });
-
-        form.setEntityId(props.id);
-        return getI18n();
+    },
+    setup() {
+        const formElement = ref(null);
+        const { t, n } = getI18n();
+        return { t, n, formElement };
     },
     methods: {
         onSubmit(event) {
